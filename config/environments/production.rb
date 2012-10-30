@@ -49,7 +49,7 @@ RailsPrelaunchSignup::Application.configure do
   # config.assets.precompile += %w( search.js )
 
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
   # config.threadsafe!
@@ -64,4 +64,19 @@ RailsPrelaunchSignup::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # ActionMailer Config
+  config.action_mailer.default_url_options = { :host => 'vendorfiles.com' }
+
+  # Setup for production - deliveries, no errors raised
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default :charset => "utf-8"
+
+  config.action_mailer.smtp_settings = {
+    :address   => "smtp.mandrillapp.com",
+    :port      => 25,
+    :user_name => ENV["MANDRILL_USERNAME"],
+    :password  => ENV["MANDRILL_API_KEY"]
+  }
 end
